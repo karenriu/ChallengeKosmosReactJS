@@ -8,7 +8,7 @@ const App = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon/ditto') 
+    fetch('https://jsonplaceholder.typicode.com/photos') 
     .then(res => res.json()) 
     .then(res => setImage(res.image)); 
   }, []);
