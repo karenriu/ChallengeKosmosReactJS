@@ -217,7 +217,6 @@ const Component = ({
           });
         }}
         onResize={onResize}
-        onResizeEnd={onResizeEnd}
         keepRatio={false}
         throttleResize={1}
         throttleDrag={1}
