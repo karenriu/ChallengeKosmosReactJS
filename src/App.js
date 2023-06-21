@@ -23,6 +23,22 @@ const App = () => {
     ]);
   };
 
+  const getImage = async () => {
+    const url = `https://jsonplaceholder.typicode.com/photos`
+    const resp = await fetch(url);
+    const {data=[]} = await resp.json()
+
+    const image = data.map(img => ({
+      id: img.id,
+      title: img.title,
+      url: img.url
+    }));
+    return image;
+    console.log(image)
+  }
+  getImage();
+
+
   const updateMoveable = (id, newComponent, updateEnd = false) => {
     const updatedMoveables = moveableComponents.map((moveable, i) => {
       if (moveable.id === id) {
@@ -64,8 +80,8 @@ const App = () => {
           background: "black",
           height: "80vh",
           width: "80vw",
-          overflow:"hidden"
-        
+          //overflow:"hidden",
+          
         }}
       >
         {moveableComponents.map((item, index) => (
@@ -207,6 +223,9 @@ const Component = ({
         target={isSelected && ref.current}
         resizable={true}
         draggable={true}
+        rotatable={true}
+        snappable={true}
+        bounds={{left: 0, top: 0, bottom: 0, right: 0, position: "css" }}
         onDrag={(e) => {
           updateMoveable(id, {
             top: e.top,
@@ -225,6 +244,8 @@ const Component = ({
         zoom={1}
         origin={false}
         padding={{ left: 0, top: 0, right: 0, bottom: 0 }}
+
+        
       />
     </>
   );
