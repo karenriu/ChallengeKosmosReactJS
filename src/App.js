@@ -5,6 +5,15 @@ const App = () => {
   const [moveableComponents, setMoveableComponents] = useState([]);
   const [selected, setSelected] = useState(null);
 
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon/ditto') 
+    .then(res => res.json()) 
+    .then(res => setImage(res.image)); 
+  }, []);
+
+
   const addMoveable = () => {
     // Create a new moveable component and add it to the array
     const COLORS = ["red", "blue", "yellow", "green", "purple"];
@@ -18,25 +27,14 @@ const App = () => {
         width: 100,
         height: 100,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        updateEnd: true
+        updateEnd: true,
+        background:{image}
       },
     ]);
   };
 
-  const getImage = async () => {
-    const url = `https://jsonplaceholder.typicode.com/photos`
-    const resp = await fetch(url);
-    const {data=[]} = await resp.json()
+ 
 
-    const image = data.map(img => ({
-      id: img.id,
-      title: img.title,
-      url: img.url
-    }));
-    return image;
-    console.log(image)
-  }
-  getImage();
 
 
   const updateMoveable = (id, newComponent, updateEnd = false) => {
@@ -92,6 +90,7 @@ const App = () => {
             handleResizeStart={handleResizeStart}
             setSelected={setSelected}
             isSelected={selected === item.id}
+            
           />
         ))}
       </div>
@@ -113,6 +112,8 @@ const Component = ({
   setSelected,
   isSelected = false,
   updateEnd,
+
+ 
 }) => {
   const ref = useRef();
 
@@ -214,7 +215,7 @@ const Component = ({
           left: left,
           width: width,
           height: height,
-          background: color,
+          background: color
         }}
         onClick={() => setSelected(id)}
       />
@@ -243,8 +244,7 @@ const Component = ({
         edge={false}
         zoom={1}
         origin={false}
-        padding={{ left: 0, top: 0, right: 0, bottom: 0 }}
-
+        padding={{ left: 0, top: 0, right: 0, bottom: 0 }} 
         
       />
     </>
